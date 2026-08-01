@@ -93,7 +93,7 @@ export default function Privacy() {
             <article className="kaart rv">
               <h3>n8n</h3>
               <p>
-                De automatiseringsserver die digitalstudiolee zelf beheert en die de melding doorzet. Die server heeft de koppeling met de mailprovider; de website zelf niet.
+                De automatiseringsserver die DigitalStudioLee zelf beheert en die de melding doorzet. Die server heeft de koppeling met de mailprovider; de website zelf niet.
                 <br />
                 <span style={{ color: 'var(--bg-75)' }}>Staat op een eigen server van DigitalStudioLee in Nederland.</span>
               </p>
