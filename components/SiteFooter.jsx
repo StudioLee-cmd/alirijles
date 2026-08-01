@@ -64,6 +64,9 @@ export default function SiteFooter() {
           © {new Date().getFullYear()} {BEDRIJF.naam} · {BEDRIJF.domein}
         </span>
         <span>Rijles in een automaat · rijbewijs B</span>
+        <span>
+          <Link href="/privacy/">Privacyverklaring</Link>
+        </span>
       </div>
     </footer>
   );
