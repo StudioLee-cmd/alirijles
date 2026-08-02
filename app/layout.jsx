@@ -3,6 +3,7 @@ import './globals.css';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Reveal from '@/components/Reveal';
+import CookieBanner from '@/components/CookieBanner';
 import { BEDRIJF, SITE_URL } from '@/lib/site';
 import { bedrijfSchema } from '@/lib/schema';
 
@@ -90,6 +91,9 @@ export default function RootLayout({ children }) {
         <main id="hoofd">{children}</main>
         <SiteFooter />
         <Reveal />
+        {/* De cookie-deur hangt aan FLAGS.chatbot: geen chat = geen cookies = geen banner.
+            De HighLevel-widget laadt PAS na akkoord, niet bij het renderen. */}
+        <CookieBanner />
       </body>
     </html>
   );
