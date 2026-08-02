@@ -68,7 +68,20 @@ export default function Privacy() {
             <p>
               Omdat je er zelf om vraagt. Je vult het formulier in om een proefles of een gesprek
               te regelen, en dat zijn de stappen vóór een lesovereenkomst. Dat is de grondslag in
-              de wet; ik gebruik je gegevens niet voor reclame en verkoop ze aan niemand.
+              de wet. Verkopen doe ik je gegevens aan niemand.
+            </p>
+            <p>
+              Onder het formulier staan twee vinkjes. Het eerste is verplicht: zonder dat mag ik
+              je niet eens terugbellen over je eigen aanvraag. Het tweede is vrij. Zet je dat aan,
+              dan mag ik je hoogstens 3 tot 4 keer per jaar iets sturen over de rijschool. Geen
+              verkooppraat, en daarbuiten hoor je alleen iets dat over je eigen aanvraag of je
+              eigen lessen gaat. Van gedachten veranderd? Eén berichtje en ik zet het uit. Dat mag
+              altijd, het kost je niets, en het verandert niets aan je lessen.
+            </p>
+            <p>
+              Bij elke aanvraag leg ik vast welke vinkjes je aanzette, wanneer dat was en welke
+              tekst er op dat moment naast stond. Zo is later altijd na te gaan waar je precies ja
+              op hebt gezegd, ook als die tekst ondertussen veranderd is.
             </p>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function ZoWerktHet() {
 
       <section className="strak">
         <div className="wrap tekst">
-          <h2>Stap 1 — De proefles</h2>
+          <h2>Stap 1: De proefles</h2>
           <p>
             We rijden samen en ik schat in waar je staat: je handigheid, je concentratie, hoe serieus
             je erin zit en je verkeersinzicht. Daarna vertel ik je eerlijk wat ik zie.
@@ -32,7 +32,7 @@ export default function ZoWerktHet() {
             Vraag een proefles aan <span aria-hidden="true">→</span>
           </Link>
 
-          <h2>Stap 2 — Het lesplan</h2>
+          <h2>Stap 2: Het lesplan</h2>
           <p>
             Op basis van de proefles bespreken we hoe we het aanpakken. Losse lessen of een pakket
             inclusief het praktijkexamen: dat kies je zelf.
@@ -44,14 +44,14 @@ export default function ZoWerktHet() {
             beloof ik je nooit, want dat verschilt per persoon.
           </p>
 
-          <h2>Stap 3 — De lessen, en tussentijds bijsturen</h2>
+          <h2>Stap 3: De lessen, en tussentijds bijsturen</h2>
           <p>
             We rijden, en na elke les hoor je waar je staat. Als je ergens op vastloopt, pakken we dat
             aan voordat het een gewoonte wordt. Dat is waar ik goed in ben: het probleem eruit halen
             en er de goede oplossing bij zoeken.
           </p>
 
-          <h2>Stap 4 — Het praktijkexamen</h2>
+          <h2>Stap 4: Het praktijkexamen</h2>
           <p>
             Als je eraan toe bent, ga je op voor je praktijkexamen. Je rijdt dat in dezelfde auto
             waarin je al je lessen hebt gehad. Wanneer je terecht kunt bepaalt het CBR, dus daar doe

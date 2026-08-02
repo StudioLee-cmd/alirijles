@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { BEDRIJF, OPHAALPLAATSEN, ZINNEN, whatsappLink } from '@/lib/site';
+import Toestemming, { TOESTEMMING } from '@/components/Toestemming';
 
 const ONDERWERPEN = ['Proefles aanvragen', 'Terugbelverzoek', 'Een andere vraag'];
 
@@ -29,6 +30,8 @@ export default function ProeflesForm({ variant = 'proefles' }) {
     if (!tel) f.telefoon = 'Vul je telefoonnummer in.';
     else if (!/^(\+?\d{8,15})$/.test(tel))
       f.telefoon = 'Dit lijkt geen telefoonnummer. Controleer het even.';
+    // Zonder dit vinkje mag ik niet terugbellen, dus dan heeft versturen geen zin.
+    if (!data.consent_contact) f.consent = 'Zet dit vinkje aan, anders mag ik je niet terugbellen.';
     return f;
   };
 
@@ -50,7 +53,16 @@ export default function ProeflesForm({ variant = 'proefles' }) {
       const res = await fetch('/api/proefles/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, formulier: variant }),
+        // De toestemming reist als DATA mee, niet als tekst op de pagina: twee booleans plus de
+        // exacte zinnen waar deze bezoeker ja op zei. Het moment zet de server zelf (§route.js).
+        body: JSON.stringify({
+          ...data,
+          formulier: variant,
+          consent_contact: Boolean(data.consent_contact),
+          consent_promotie: Boolean(data.consent_promotie),
+          consent_versie: TOESTEMMING.versie,
+          consent_tekst: { contact: TOESTEMMING.contact, promotie: TOESTEMMING.promotie },
+        }),
       });
       if (!res.ok) throw new Error(`status ${res.status}`);
       setStaat('klaar');
@@ -170,6 +182,8 @@ export default function ProeflesForm({ variant = 'proefles' }) {
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
+      <Toestemming fout={fouten.consent} />
+
       <button className="btn" type="submit" disabled={staat === 'bezig'}>
         {staat === 'bezig' ? 'Versturen…' : 'Verstuur mijn aanvraag'}
       </button>
@@ -187,11 +201,6 @@ export default function ProeflesForm({ variant = 'proefles' }) {
           </a>
         </p>
       ) : null}
-
-      <span className="fnote">
-        Je gegevens gebruik ik alleen om je terug te bellen over je aanvraag. Ik plan niets
-        automatisch in — we spreken het moment samen af.
-      </span>
     </form>
   );
 }

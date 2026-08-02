@@ -949,6 +949,49 @@ form.aanvraag .fnote {
   color: rgba(250, 244, 234, 0.5);
 }
 
+/* het toestemmings-blok. De generieke input-regel hierboven zet width:100% + min-height:48px —
+   dat maakt van een checkbox een vlak, dus die wordt hier expliciet teruggezet. */
+form.aanvraag .toestemming {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(250, 244, 234, 0.18);
+  border-radius: var(--rad-s);
+  background: rgba(250, 244, 234, 0.04);
+}
+form.aanvraag .vink {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+}
+form.aanvraag .vink input[type='checkbox'] {
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin: 1px 0 0;
+  padding: 0;
+  accent-color: var(--sun);
+  cursor: pointer;
+}
+form.aanvraag .vink label {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: rgba(250, 244, 234, 0.82);
+  cursor: pointer;
+}
+form.aanvraag .vink input[aria-invalid='true'] {
+  outline: 2px solid #ffcf8f;
+  outline-offset: 2px;
+}
+form.aanvraag .toestemming .fnote a {
+  color: rgba(250, 244, 234, 0.72);
+  text-decoration: underline;
+}
+
 .gelukt {
   background: rgba(232, 176, 75, 0.12);
   border: 1px solid rgba(232, 176, 75, 0.45);

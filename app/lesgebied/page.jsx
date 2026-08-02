@@ -14,7 +14,7 @@ const KAARTEN = [
   { naam: 'Lansingerland', href: '/rijschool-lansingerland/', onder: 'Ophalen kan bij station Lansingerland.' },
   { naam: 'Leidschenveen', href: '/rijschool-leidschenveen/', onder: 'Ophalen op een plek die jou uitkomt.' },
   { naam: 'Bleiswijk', href: '/rijschool-bleiswijk/', onder: 'Ophalen op een plek die jou uitkomt.' },
-  { naam: 'Benthuizen', href: null, onder: 'Ook hier geef ik les — vraag het even bij je aanvraag.' },
+  { naam: 'Benthuizen', href: null, onder: 'Ook hier geef ik les. Vraag het even bij je aanvraag.' },
 ];
 
 export default function Lesgebied() {

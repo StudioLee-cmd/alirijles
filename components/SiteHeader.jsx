@@ -24,7 +24,7 @@ export default function SiteHeader() {
   return (
     <header className="top">
       <div className="in">
-        <Link className="brand" href="/" aria-label={`${BEDRIJF.naam} — naar de homepage`}>
+        <Link className="brand" href="/" aria-label={`${BEDRIJF.naam}, naar de homepage`}>
           <span className="mark" aria-hidden="true">
             A
           </span>

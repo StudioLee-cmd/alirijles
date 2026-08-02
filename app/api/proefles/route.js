@@ -41,38 +41,52 @@ const kort = (v, n = 800) => {
   return s || null;
 };
 
+// ⚑ BEIDE ROUTES VANGEN HUN EIGEN NETWERKFOUT, en dat is geen nettigheid maar het contract
+//   hierboven. `fetch` GOOIT bij een onbereikbare host (DNS, geweigerde verbinding, timeout) in
+//   plaats van een `res` terug te geven. Zonder deze try/catch klimt die fout uit de handler en
+//   krijgt de bezoeker een 500 — óók als de ledger z'n aanvraag allang had opgeslagen. Gemeten
+//   02-08-2026 met een doodlopende meld-URL: HTTP 500 waar 502 hoorde, en een lead die wél
+//   vastlag zag eruit als een mislukte aanvraag.
 async function naarLedger(rij) {
   if (!SUPABASE_URL || !SUPABASE_KEY) return { ok: false, reden: 'ledger niet geconfigureerd' };
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/client_site_leads`, {
-    method: 'POST',
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'return=representation',
-    },
-    body: JSON.stringify(rij),
-  });
-  if (!res.ok) return { ok: false, reden: `supabase ${res.status}: ${await res.text()}` };
-  const [opgeslagen] = await res.json();
-  return { ok: true, id: opgeslagen?.id };
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/client_site_leads`, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation',
+      },
+      body: JSON.stringify(rij),
+    });
+    if (!res.ok) return { ok: false, reden: `supabase ${res.status}: ${await res.text()}` };
+    const [opgeslagen] = await res.json();
+    return { ok: true, id: opgeslagen?.id };
+  } catch (err) {
+    return { ok: false, reden: `supabase onbereikbaar: ${err?.message || err}` };
+  }
 }
 
 async function naarMelding(rij, ledgerId) {
-  const res = await fetch(MELD_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'User-Agent': UA },
-    body: JSON.stringify({ ...rij, client_slug: CLIENT, ledger_id: ledgerId || null }),
-  });
-  const tekst = await res.text();
-  if (!res.ok) return { ok: false, reden: `meldrail ${res.status}: ${tekst}` };
-  let uit = {};
   try {
-    uit = JSON.parse(tekst);
-  } catch {
-    /* een niet-JSON body telt als mislukt, niet als stil geslaagd */
+    const res = await fetch(MELD_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'User-Agent': UA },
+      body: JSON.stringify({ ...rij, client_slug: CLIENT, ledger_id: ledgerId || null }),
+    });
+    const tekst = await res.text();
+    if (!res.ok) return { ok: false, reden: `meldrail ${res.status}: ${tekst}` };
+    let uit = {};
+    try {
+      uit = JSON.parse(tekst);
+    } catch {
+      /* een niet-JSON body telt als mislukt, niet als stil geslaagd */
+    }
+    return uit.ok === true ? { ok: true } : { ok: false, reden: `meldrail weigerde: ${tekst}` };
+  } catch (err) {
+    return { ok: false, reden: `meldrail onbereikbaar: ${err?.message || err}` };
   }
-  return uit.ok === true ? { ok: true } : { ok: false, reden: `meldrail weigerde: ${tekst}` };
 }
 
 export async function POST(request) {
@@ -92,6 +106,13 @@ export async function POST(request) {
     return NextResponse.json({ error: 'naam en telefoonnummer zijn verplicht' }, { status: 400 });
   }
 
+  // ⚑ DE TOESTEMMING WORDT HIER GEWEIGERD, NIET ALLEEN IN HET FORMULIER. Client-side validatie
+  //   is een gemak voor de bezoeker, geen gate: een directe POST omzeilt 'm. Zonder het eerste
+  //   vinkje slaan we niets op, want dan hebben we niets om ons op te beroepen.
+  if (body.consent_contact !== true) {
+    return NextResponse.json({ error: 'toestemming voor contact is verplicht' }, { status: 400 });
+  }
+
   const rij = {
     client_slug: CLIENT,
     domein: 'alirijles.nl',
@@ -103,6 +124,14 @@ export async function POST(request) {
     onderwerp: kort(body.onderwerp, 80),
     bericht: kort(body.bericht, 2000),
     bron: 'website',
+    // Twee booleans, het moment en de exacte tekst waarop deze bezoeker ja zei. Het MOMENT komt
+    // van de server: een tijdstip dat de browser meestuurt is niet te vertrouwen als bewijs.
+    consent_contact: true,
+    consent_promotie: body.consent_promotie === true,
+    consent_moment: new Date().toISOString(),
+    consent_versie: kort(body.consent_versie, 40),
+    consent_tekst:
+      body.consent_tekst && typeof body.consent_tekst === 'object' ? body.consent_tekst : null,
   };
 
   const ledger = await naarLedger(rij);

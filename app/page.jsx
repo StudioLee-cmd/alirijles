@@ -90,7 +90,7 @@ export default function Home() {
             <span className="dot" />
             <div>
               <b>Altijd dezelfde instructeur</b>
-              <span>Ik rijd alleen — nooit een wisselende invaller.</span>
+              <span>Ik rijd alleen, nooit een wisselende invaller.</span>
             </div>
           </div>
           <div className="usp">
