@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BEDRIJF } from '@/lib/site';
+import { PRIVACY_PROMOTIE } from '@/lib/toestemming';
 
 // ⚑ GEGENEREERD door alpha1/scripts/bouw_privacyverklaring.py — bewerk die, niet dit bestand.
 //   Elke ontvanger hieronder is gemeten aan app/api/proefles/route.js. Verandert die route,
@@ -70,13 +71,16 @@ export default function Privacy() {
               te regelen, en dat zijn de stappen vóór een lesovereenkomst. Dat is de grondslag in
               de wet. Verkopen doe ik je gegevens aan niemand.
             </p>
+            {/* ⚑ DE TWEEDE ZIN KOMT UIT lib/toestemming.js EN STAAT HIER BEWUST NIET UITGESCHREVEN.
+                Tot 03-08-2026 stond hier "hoogstens 3 tot 4 keer per jaar" plus "geen verkooppraat",
+                terwijl geen enkele klant dat had toegezegd, en het vinkje zélf beloofde hetzelfde:
+                twee oppervlakken die los van elkaar iets beloven namens iemand anders. Nu is er één
+                bron, en die leest de belofte uit de klant-eigenschap PROMOTIE_BELOFTE in lib/site.js. */}
             <p>
               Onder het formulier staan twee vinkjes. Het eerste is verplicht: zonder dat mag ik
-              je niet eens terugbellen over je eigen aanvraag. Het tweede is vrij. Zet je dat aan,
-              dan mag ik je hoogstens 3 tot 4 keer per jaar iets sturen over de rijschool. Geen
-              verkooppraat, en daarbuiten hoor je alleen iets dat over je eigen aanvraag of je
-              eigen lessen gaat. Van gedachten veranderd? Eén berichtje en ik zet het uit. Dat mag
-              altijd, het kost je niets, en het verandert niets aan je lessen.
+              je niet eens terugbellen over je eigen aanvraag. {PRIVACY_PROMOTIE} Van gedachten
+              veranderd? Eén berichtje en ik zet het uit. Dat mag altijd, het kost je niets, en
+              het verandert niets aan je lessen.
             </p>
             <p>
               Bij elke aanvraag leg ik vast welke vinkjes je aanzette, wanneer dat was en welke
@@ -140,7 +144,7 @@ export default function Privacy() {
       <section className="strak">
         <div className="wrap">
           <h2>Hoe lang het blijft staan</h2>
-          <p>Een aanvraag blijft bewaard zolang hij nog tot lesafspraken kan leiden, en wordt daarna verwijderd. Er is geen vaste termijn afgesproken.</p>
+          <p>Je aanvraag wordt 6 maanden bewaard, gerekend vanaf het moment dat je hem verstuurde. Daarna wordt hij verwijderd.</p>
           <p style={{ marginTop: 12 }}>
             Word je leerling, dan hoort je aanvraag bij mijn gewone leerlingadministratie en
             bewaar ik hem zolang dat voor de lessen en de administratie nodig is.

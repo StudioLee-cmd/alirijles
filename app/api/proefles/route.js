@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { TOESTEMMING } from '@/lib/toestemming';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -40,6 +41,42 @@ const kort = (v, n = 800) => {
   const s = v.trim().slice(0, n);
   return s || null;
 };
+
+/**
+ * Welke toestemmings-tekst er bij deze lead wordt vastgelegd.
+ *
+ * ⚑ DE TEKST KOMT VAN DE SERVER, NIET UIT DE BODY (03-08-2026). Tot vandaag nam deze route
+ *    `consent_versie` en `consent_tekst` letterlijk over uit wat de browser meestuurde, terwijl
+ *    de regel eronder juist uitlegt waarom het MOMENT van de server komt: een bezoeker kan alles
+ *    posten wat 'ie wil, dus een meegestuurd bewijsstuk bewijst niets. De server rendert dezelfde
+ *    `lib/toestemming.js` als de pagina, dus 'ie weet zelf wat er stond.
+ *
+ * ⚑ EN DE UITZONDERING DIE DAT EERLIJK HOUDT: staat er in de body een ANDERE versie, dan had die
+ *    bezoeker een oudere bundel in z'n browser (een deploy tussen laden en versturen). Dan is de
+ *    tekst van de server níet wat 'ie zag. Dat overschrijven we niet stil: de server-tekst blijft
+ *    het record, en wat de browser meldde komt er als `bezoeker` naast te staan. Zichtbare
+ *    tegenspraak is bruikbaar bewijs; stille tegenspraak niet.
+ */
+function consentTekst(body) {
+  const gemeld = kort(body.consent_versie, 60);
+  const tekst = {
+    contact: TOESTEMMING.contact,
+    promotie: TOESTEMMING.promotie,
+  };
+  // Alleen aanwezig als de klant écht iets heeft toegezegd (lib/site.js §PROMOTIE_BELOFTE).
+  if (TOESTEMMING.beloftebron) tekst.beloftebron = TOESTEMMING.beloftebron;
+
+  if (gemeld && gemeld !== TOESTEMMING.versie) {
+    const b = body.consent_tekst;
+    tekst.bezoeker = {
+      versie: gemeld,
+      contact: b && typeof b === 'object' ? kort(b.contact, 500) : null,
+      promotie: b && typeof b === 'object' ? kort(b.promotie, 500) : null,
+    };
+    console.warn('[aanvraag] consent-versie week af', gemeld, '≠', TOESTEMMING.versie);
+  }
+  return { consent_versie: TOESTEMMING.versie, consent_tekst: tekst };
+}
 
 // ⚑ BEIDE ROUTES VANGEN HUN EIGEN NETWERKFOUT, en dat is geen nettigheid maar het contract
 //   hierboven. `fetch` GOOIT bij een onbereikbare host (DNS, geweigerde verbinding, timeout) in
@@ -129,9 +166,7 @@ export async function POST(request) {
     consent_contact: true,
     consent_promotie: body.consent_promotie === true,
     consent_moment: new Date().toISOString(),
-    consent_versie: kort(body.consent_versie, 40),
-    consent_tekst:
-      body.consent_tekst && typeof body.consent_tekst === 'object' ? body.consent_tekst : null,
+    ...consentTekst(body),
   };
 
   const ledger = await naarLedger(rij);

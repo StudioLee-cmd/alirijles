@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TOESTEMMING } from '@/lib/toestemming';
 
 /**
  * Het toestemmings-blok van een lead-formulier. Twee vinkjes, bewust gescheiden.
@@ -9,18 +10,19 @@ import Link from 'next/link';
  * PATROON geworden — juist het herbruikbare contact-blok droeg 'm niet, dus elke site die
  * daaruit gekopieerd werd startte zonder. Eén component, en de volgende site erft 'm gratis.
  *
- * ⚑ DE TEKST IS DATA, GEEN OPMAAK. Wat hier staat reist bij élke inzending mee naar de ledger
- * (`consent_tekst` + `consent_versie`), want een vinkje zonder vastgelegde tekst is over een jaar
- * waardeloos: je weet dan wél dat iemand ja zei en niet meer waaróp. Verandert er een woord
- * hieronder, dan verandert VERSIE mee — de oude rijen blijven bewijzen wat zíj gezien hebben.
+ * ⚑ DE TEKST STAAT HIER NIET MEER, EN DAT IS DE HELE FIX (03-08-2026). De zinnen komen uit
+ * `lib/toestemming.js`, en die bouwt ze uit `BEDRIJF` + `PROMOTIE_BELOFTE` in lib/site.js.
+ * Reden: tot 03-08 stond hier letterlijk "Ali mag me af en toe iets sturen over de rijschool.
+ * Maximaal 3 tot 4 keer per jaar, en nooit verkooppraat" — twee toezeggingen namens een klant
+ * die geen van beide had gedaan, in een blok dat juist bedoeld is om naar de volgende site te
+ * reizen. De tekst is bovendien DATA en geen opmaak: 'ie reist bij élke inzending mee naar de
+ * ledger (`consent_tekst` + `consent_versie`), dus 'ie ligt bij iedere lead vast als bewijsstuk
+ * van wat er beloofd is. Een belofte hoort dus bij de klant thuis, niet bij het blok.
  */
-export const TOESTEMMING = {
-  versie: 'v1-2026-08-02',
-  contact:
-    'Ali mag mijn naam en telefoonnummer gebruiken om contact met me op te nemen over deze aanvraag.',
-  promotie:
-    'Ali mag me af en toe iets sturen over de rijschool. Maximaal 3 tot 4 keer per jaar, en nooit verkooppraat.',
-};
+
+// Doorgeven, zodat wie dit blok gebruikt niet twee imports nodig heeft. De bron blijft
+// lib/toestemming.js — hier staat geen tekst, alleen de doorgifte.
+export { TOESTEMMING };
 
 export default function Toestemming({ fout }) {
   return (
