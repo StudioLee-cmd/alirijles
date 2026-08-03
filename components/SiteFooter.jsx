@@ -67,6 +67,14 @@ export default function SiteFooter() {
         <span>
           <Link href="/privacy/">Privacyverklaring</Link>
         </span>
+        {/* Powered by — Tim 02-08: hoort op elke klantsite en op elk template.
+            Bewust in --mut en klein: het is een credit, geen tweede merk op Ali's site. */}
+        <span style={{ color: 'var(--mut)' }}>
+          Powered by{' '}
+          <a href="https://studiolee.nl" rel="noopener" style={{ color: 'inherit' }}>
+            StudioLee
+          </a>
+        </span>
       </div>
     </footer>
   );

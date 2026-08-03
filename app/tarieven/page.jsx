@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Byline, Slot } from '@/components/Bouwstenen';
+import { PRIJZEN, euro } from '@/lib/site';
 
 export const metadata = {
   title: 'Tarieven | Autorijschool Zoetermeer',
@@ -23,11 +24,82 @@ export default function Tarieven() {
         </div>
       </div>
 
-      {/* ⛔ De losse lesprijs, de proefles-prijs en de pakketten komen uit Ali's prijs-PDF
-          (kennisbank.md §C: "dat stuur ik jou in een PDF"). Tot die er is staat hier NIETS:
-          geen bedrag, geen "vanaf", geen "binnenkort". Een lege sectie is beter dan een
-          verkeerd getal, en Ali is de enige die deze getallen mag leveren.
-          Aanzetten: FLAGS.prijzen in lib/site.js — todo ali-prijssectie-na-de-pdf. */}
+      {/* De prijzen komen uit PRIJZEN in lib/site.js, dat is de enige bron. Ali's eigen bord van 02-08.
+          De ACTIE staat er bewust naast de normale prijs en niet in plaats daarvan: zijn bord zegt zelf
+          "TIJDELIJK ACTIE" en "OP IS OP", dus een actieprijs als vaste prijs tonen is een belofte die
+          over een paar maanden niet meer klopt. Loopt de actie af, dan gaat PRIJZEN.actieLoopt op false
+          en verdwijnt de kolom vanzelf. Wat er BEWUST niet staat (de pakketten inclusief examen, de
+          proefles-prijs, en of dit ook buiten Zoetermeer geldt) is bij Ali uitgevraagd op 02-08. */}
+      <section className="strak">
+        <div className="wrap">
+          <h2>Lesprijzen</h2>
+          <p className="sub">
+            Een les duurt {PRIJZEN.lesduurMinuten} minuten. Deze prijzen gelden voor {PRIJZEN.gebied}.
+          </p>
+
+          <div className="blok wit" style={{ marginTop: 20 }}>
+            <h3>Losse les</h3>
+            <p style={{ fontSize: '1.6rem', margin: '8px 0' }}>
+              {PRIJZEN.actieLoopt ? (
+                <>
+                  <strong>&euro; {euro(PRIJZEN.losseLes.actie)}</strong>{' '}
+                  <span style={{ textDecoration: 'line-through', color: 'var(--mut)', fontSize: '1rem' }}>
+                    &euro; {euro(PRIJZEN.losseLes.normaal)}
+                  </span>
+                </>
+              ) : (
+                <strong>&euro; {euro(PRIJZEN.losseLes.normaal)}</strong>
+              )}
+            </p>
+            {PRIJZEN.actieLoopt && (
+              <p style={{ color: 'var(--mut)', margin: 0 }}>Tijdelijke actie, op is op.</p>
+            )}
+          </div>
+
+          <h3 style={{ marginTop: 28 }}>Pakketten</h3>
+          <table className="prijstabel" style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', padding: '10px 8px', borderBottom: '1px solid var(--line)' }}>Pakket</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', borderBottom: '1px solid var(--line)' }}>Lessen</th>
+                <th style={{ textAlign: 'right', padding: '10px 8px', borderBottom: '1px solid var(--line)' }}>Prijs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PRIJZEN.pakketten.map((p) => (
+                <tr key={p.naam}>
+                  <td style={{ padding: '10px 8px', borderBottom: '1px solid var(--line)' }}>Pakket {p.naam}</td>
+                  <td style={{ padding: '10px 8px', borderBottom: '1px solid var(--line)' }}>{p.lessen}</td>
+                  <td style={{ padding: '10px 8px', borderBottom: '1px solid var(--line)', textAlign: 'right' }}>
+                    {PRIJZEN.actieLoopt ? (
+                      <>
+                        <strong>&euro; {euro(p.actie)}</strong>{' '}
+                        <span style={{ textDecoration: 'line-through', color: 'var(--mut)' }}>
+                          &euro; {euro(p.normaal)}
+                        </span>
+                      </>
+                    ) : (
+                      <strong>&euro; {euro(p.normaal)}</strong>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p style={{ color: 'var(--mut)', marginTop: 10 }}>
+            Je volgt minimaal {PRIJZEN.minimumLessenVoorExamen} lessen voordat je examen doet.
+          </p>
+
+          <h3 style={{ marginTop: 28 }}>Examens</h3>
+          <ul className="vinkjes">
+            {PRIJZEN.examens.map((e) => (
+              <li key={e.wat}>
+                {e.wat}: <strong>&euro; {euro(e.bedrag)}</strong>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <section className="strak">
         <div className="wrap tekst">
