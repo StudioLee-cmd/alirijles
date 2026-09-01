@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Byline, BelKnop, CtaKnop, Zonneweg } from '@/components/Bouwstenen';
 import ProeflesForm from '@/components/ProeflesForm';
-import { BEDRIJF, FLAGS, ZINNEN } from '@/lib/site';
+import { BEDRIJF, FLAGS, PRIJZEN, ZINNEN, euro } from '@/lib/site';
 
 export const metadata = {
   title: 'Rijschool Zoetermeer | rijles in een automaat',
@@ -58,6 +58,10 @@ const STAPPEN = [
       'Als je eraan toe bent, ga je op voor je praktijkexamen. Wanneer dat kan bepaalt het CBR, niet ik.',
   },
 ];
+
+const UITGELICHTE_PAKKETTEN = ['B', 'D'].map((naam) =>
+  PRIJZEN.pakketten.find((pakket) => pakket.naam === naam),
+);
 
 export default function Home() {
   return (
@@ -203,10 +207,45 @@ export default function Home() {
               terugvragen.
             </p>
           </div>
-          {/* ⛔ De drie prijskaarten uit de gekozen look staan hier bewust NIET.
-              Ali's prijzen komen in een PDF die er nog niet is (kennisbank.md §C). Tot dan geen
-              bedrag, geen "vanaf"-prijs en geen "binnenkort": de sectie hierboven staat op eigen
-              benen. Kaarten komen erbij bij FLAGS.prijzen (todo ali-prijssectie-na-de-pdf). */}
+          {FLAGS.prijzen ? (
+            <>
+              <div className="grid k3 prijskaarten">
+                <article className="prijskaart rv">
+                  <span className="let">60 minuten</span>
+                  <h3>Losse les</h3>
+                  <p className="prijsbedrag">
+                    &euro;{' '}
+                    {euro(
+                      PRIJZEN.actieLoopt
+                        ? PRIJZEN.losseLes.actie
+                        : PRIJZEN.losseLes.normaal,
+                    )}
+                  </p>
+                  {PRIJZEN.actieLoopt ? (
+                    <p className="prijsnormaal">
+                      Normaal &euro; {euro(PRIJZEN.losseLes.normaal)}
+                    </p>
+                  ) : null}
+                </article>
+                {UITGELICHTE_PAKKETTEN.map((pakket) => (
+                  <article className="prijskaart rv" key={pakket.naam}>
+                    <span className="let">{pakket.lessen} lessen</span>
+                    <h3>Pakket {pakket.naam}</h3>
+                    <p className="prijsbedrag">
+                      &euro; {euro(PRIJZEN.actieLoopt ? pakket.actie : pakket.normaal)}
+                    </p>
+                    {PRIJZEN.actieLoopt ? (
+                      <p className="prijsnormaal">Normaal &euro; {euro(pakket.normaal)}</p>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+              <p className="prijsnoot">
+                Deze prijzen gelden voor {PRIJZEN.gebied}.
+                {PRIJZEN.actieLoopt ? ' Tijdelijke actie, op is op.' : ''}
+              </p>
+            </>
+          ) : null}
           <Link className="verder" href="/tarieven/">
             Bekijk de tarieven <span aria-hidden="true">→</span>
           </Link>

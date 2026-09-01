@@ -771,6 +771,38 @@ nav.hoofd a[aria-current='page'] {
   padding: 4px 12px;
 }
 
+.prijskaarten {
+  margin-top: 30px;
+}
+.prijskaart {
+  background: var(--wit);
+  border: 1px solid var(--line);
+  border-radius: var(--rad);
+  padding: 26px 24px;
+}
+.prijskaart h3 {
+  font-size: 19px;
+  margin: 16px 0 6px;
+}
+.prijskaart .prijsbedrag {
+  color: var(--ink);
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(29px, 4vw, 38px);
+  font-weight: 900;
+  line-height: 1;
+}
+.prijskaart .prijsnormaal {
+  color: var(--mut);
+  font-size: 14px;
+  margin-top: 9px;
+  text-decoration: line-through;
+}
+.prijsnoot {
+  color: var(--mut);
+  font-size: 13.5px;
+  margin-top: 12px;
+}
+
 /* ── faq-accordeon ───────────────────────────────────────────────────────── */
 
 .faq {
