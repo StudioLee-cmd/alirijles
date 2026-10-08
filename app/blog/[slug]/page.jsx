@@ -42,7 +42,6 @@ export default function Artikel({ params }) {
       </div>
       <figure className="wrap blog-hero">
         <img src={artikel.beeld} alt={artikel.alt} width="1672" height="941" fetchPriority="high" />
-        <figcaption>Illustratie gemaakt met AI.</figcaption>
       </figure>
       <div className="wrap tekst blog-body" dangerouslySetInnerHTML={{ __html: tekst }} />
       <aside className="wrap tekst blog-related" aria-label="Verder lezen">
