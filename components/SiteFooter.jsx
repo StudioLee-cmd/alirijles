@@ -38,6 +38,7 @@ export default function SiteFooter() {
         <div>
           <b className="kop">Snel naar</b>
           <ul>
+            <li><Link href="/blog/">Blog</Link></li>
             {NAV.map((n) => (
               <li key={n.href}>
                 <Link href={n.href}>{n.label}</Link>

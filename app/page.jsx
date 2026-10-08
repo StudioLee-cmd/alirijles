@@ -252,13 +252,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* De blog-sectie hoort bij de gekozen look ("Slimmer naar je rijbewijs") maar staat op
-          `gated` tot de managed-upgrade (tool-profiel.md). Verborgen, niet verwijderd. */}
+      {/* De eerste artikelen zijn op 08-10-2026 door Tim voor publicatie opgedragen. */}
       {FLAGS.blog ? (
         <section className="strak">
           <div className="wrap">
             <span className="kick">Blog</span>
             <h2>Slimmer naar je rijbewijs</h2>
+            <p>Hoe verloopt je eerste rijles? En waar let je op als je een lespakket kiest?</p>
+            <Link className="verder" href="/blog/">
+              Lees de artikelen <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </section>
       ) : null}

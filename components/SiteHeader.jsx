@@ -65,6 +65,7 @@ export default function SiteHeader() {
           </Link>
         ))}
         <Link href="/veelgestelde-vragen/">Veelgestelde vragen</Link>
+        <Link href="/blog/">Blog</Link>
         <Link href="/contact/">Contact</Link>
         <Link className="btn" href="/proefles/">
           {ZINNEN.cta}

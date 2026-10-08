@@ -1,0 +1,29 @@
+{
+  "_wat": "Prompt-manifest van deze lane (asset-wet stap ②). Per render de EXACTE prompt + model, zodat een misser herstelbaar is. Geschreven door tools/asset_manifest.py; gelezen door #/assets/register (app.js ccManifestRijen) + alpha1/scripts/sync_asset_register.py.",
+  "assets": [
+    {
+      "file": "eerste-rijles-automaat.webp",
+      "prompt": "Create a finished 16:9 Dutch driving-school blog cover. Use the attached image only as reference for its five-layer claymation layout, NOT its green palette, brand or subject. Ali's brand Autorijschool Zoetermeer: warm cream #FAF4EA, ink brown #33291F, terracotta #C96F4A. Five layers: plain cream backdrop; a large soft tone-on-tone shadow of a serif capital A on the open left wall; gentle broad backlight separating subject; a matte smooth clay Toyota Yaris-like compact driving-school hatchback with a small L roof sign on a raised circular terracotta plateau to the right; bottom-left translucent frosted dark-brown glass panel bearing exact readable Dutch title 'Je eerste rijles in een automaat'. Small cream serif A inside terracotta rounded square at top right. Small pill below title reads 'alirijles.nl'. Warm approachable, slight isometric perspective, finely crafted rounded clay volumes, controlled soft shadows, no decorative squiggles, no extra layers, no green, no human likeness, no Toyota logo, no false awards. Match reference's calm spatial arrangement but use Ali's identity. High quality final blog image.",
+      "provider": "OpenAI built-in image_gen",
+      "model": "built-in image generation (model not exposed)",
+      "res": "16:9",
+      "reference": "F01B five-layer composition, adapted to client brand.md and design.md",
+      "brief": "capture:cap-2026-10-08-041; client brand.md and design.md",
+      "date": "2026-10-08",
+      "source_file": "eerste-rijles-automaat.png",
+      "derivative": "WebP quality88; same dimensions and composition"
+    },
+    {
+      "file": "rijlespakket-kiezen.webp",
+      "prompt": "Create a second finished 16:9 Dutch blog cover in exactly the same visual family as the attached first cover. Preserve the warm cream #FAF4EA plain backdrop, giant soft shadow serif A on left wall, gentle backlight, top-right terracotta #C96F4A tile with cream serif A, dark-brown frosted glass lower-left title panel and small alirijles.nl pill. Change subject to ONE compact matte clay composition on raised terracotta circular plateau at right: a cream clipboard with a few simple checkmarks, a small cream automatic-driving-school hatchback scale model and a clock, arranged as a single still-life communicating comparing lesson packages. No money, prices, guarantees or fake certifications. Exact title text: 'Een rijlespakket kiezen'. Real legible Dutch typography. No other words besides title and 'alirijles.nl', no green, no squiggles. Soft simplified clay volumes, rounded edges, calm warm light, open space on left, polished editorial cover.",
+      "provider": "OpenAI built-in image_gen",
+      "model": "built-in image generation (model not exposed)",
+      "res": "16:9",
+      "reference": "F01B five-layer composition, adapted to client brand.md and design.md",
+      "brief": "capture:cap-2026-10-08-041; client brand.md and design.md",
+      "date": "2026-10-08",
+      "source_file": "rijlespakket-kiezen.png",
+      "derivative": "WebP quality88; same dimensions and composition"
+    }
+  ]
+}
