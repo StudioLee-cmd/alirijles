@@ -23,7 +23,7 @@ export default function Blog() {
               <img src={artikel.beeld} alt={artikel.alt} width="1672" height="941" />
             </Link>
             <div className="blog-card-body">
-              <time dateTime={artikel.datum}>8 oktober 2026</time>
+              <time dateTime={artikel.datum}>{new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }).format(new Date(artikel.datum + 'T12:00:00Z'))}</time>
               <h2><Link href={`/blog/${artikel.slug}/`}>{artikel.titel}</Link></h2>
               <p>{artikel.omschrijving}</p>
               <Link className="verder" href={`/blog/${artikel.slug}/`}>Lees het artikel <span aria-hidden="true">→</span></Link>

@@ -9,7 +9,7 @@ export default function sitemap() {
     changeFrequency: 'monthly',
     priority: p.prio,
   })),
-    { url: `${SITE_URL}/blog/`, lastModified: '2026-10-08', changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${SITE_URL}/blog/`, lastModified: ARTIKELEN.map((artikel) => artikel.datum).sort().at(-1), changeFrequency: 'weekly', priority: 0.6 },
     ...ARTIKELEN.map((artikel) => ({ url: `${SITE_URL}/blog/${artikel.slug}/`, lastModified: artikel.datum, changeFrequency: 'monthly', priority: 0.5 })),
   ];
 }

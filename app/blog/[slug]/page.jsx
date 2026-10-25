@@ -38,7 +38,7 @@ export default function Artikel({ params }) {
         <nav aria-label="Kruimelpad" className="blog-breadcrumb"><Link href="/">Home</Link><span aria-hidden="true"> / </span><Link href="/blog/">Blog</Link></nav>
         <span className="kick">Praktische uitleg</span>
         <h1>{artikel.titel}</h1>
-        <p className="blog-meta">Autorijschool Zoetermeer · <time dateTime={artikel.datum}>8 oktober 2026</time></p>
+        <p className="blog-meta">Autorijschool Zoetermeer · <time dateTime={artikel.datum}>{new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }).format(new Date(artikel.datum + 'T12:00:00Z'))}</time></p>
       </div>
       <figure className="wrap blog-hero">
         <img src={artikel.beeld} alt={artikel.alt} width="1672" height="941" fetchPriority="high" />
